@@ -1,0 +1,17 @@
+---
+# Source: circleci-simple-app/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: circleci-simple-app
+  labels:
+    chart: circleci-simple-app
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 3000
+    targetPort: 3000
+    protocol: TCP
+    name: circleci-simple-service
+  selector:
+    app: circleci-simple-app

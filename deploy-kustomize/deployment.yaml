@@ -1,0 +1,35 @@
+# Source: circleci-simple-app/templates/deployment.yaml
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: circleci-simple-app
+  labels:
+    chart: circleci-simple-app
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: circleci-simple-app
+    spec:
+      containers:
+      - name: circleci-simple-app
+        image: "prakashmirji/circleci-simple-app:v2"
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 3000
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 3000
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 3000
+        resources:
+            limits:
+              cpu: 100m
+              memory: 128Mi
+            requests:
+              cpu: 100m
+              memory: 128Mi

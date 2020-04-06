@@ -1,0 +1,66 @@
+version: 2.1
+
+orbs:
+  node: circleci/node@1.1.6
+  gcp-gke: circleci/gcp-gke@1.0.3
+  gcr: circleci/gcp-gcr@0.6.1
+  Kubernetes: circleci/kubernetes@0.11.0
+
+jobs:
+  build:
+    executor:
+      name: node/default
+      tag: '10.4'
+    steps:
+      - checkout
+      - node/with-cache:
+          steps:
+            - run: npm install
+  Build-Push-Image-Docker:
+    description: Build and push image to Google Container Registry
+    machine: true
+    steps:
+      - checkout
+      - gcr/gcr-auth
+      - gcr/build-image:
+          image: circleci-simple-app
+          tag: "v2"
+      - gcr/push-image:
+          image: circleci-simple-app
+          tag: "v2"
+
+    
+  deploy:
+    description: Deploy application to Google Kubernetes Engine
+    machine: true
+    steps:
+      - checkout
+      - gcp-gke/update-kubeconfig-with-credentials:
+          cluster: test-cluster-prakash-1
+          perform-login: true
+          install-kubectl: true
+      - run:
+          name: Deploy using kustomize
+          command: |
+            kubectl apply -k deploy
+      #- gcp-gke/rollout-image:
+      #    cluster: test-cluster-prakash-1
+      #    deployment: circleci-simple-app
+      #    container: circleci-simple-app
+      #    image: gcr.io/global-solution-engineering/circleci-simple-app
+      #    tag: v2
+      #    namespace: default
+
+workflows:
+  build_update_deploy:
+    jobs:
+      - build
+      - Build-Push-Image-Docker:
+          context: gke
+          requires:
+            - build
+      - deploy:
+          context: gke
+          requires:
+            - Build-Push-Image-Docker
+      
