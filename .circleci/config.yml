@@ -2,8 +2,7 @@ version: 2.1
 
 orbs:
   node: circleci/node@1.1.6
-  Kubernetes: circleci/kubernetes@0.11.0
-  kube-orb: circleci/kubernetes@1.0.0
+  Kube-orb: circleci/kubernetes@0.11.0
 jobs:
   build:
     executor:
