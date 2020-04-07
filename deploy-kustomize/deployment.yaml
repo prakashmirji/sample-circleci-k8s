@@ -1,12 +1,15 @@
 # Source: circleci-simple-app/templates/deployment.yaml
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: circleci-simple-app
   labels:
-    chart: circleci-simple-app
+    app: circleci-simple-app
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+     app: circleci-simple-app
   template:
     metadata:
       labels:
