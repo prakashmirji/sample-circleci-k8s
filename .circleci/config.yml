@@ -6,6 +6,8 @@ orbs:
 jobs:
   build:
     machine: true
+    docker:
+      - image: 'prakashmirji/circle-simple-app:v2' 
     executor:
       name: node/default
       tag: '10.4'
@@ -16,6 +18,8 @@ jobs:
             - run: npm install
   install-kubeconfig:
     machine: true
+    docker:
+      - image: 'prakashmirji/circle-simple-app:v2' 
     description: install kubeconfig
     steps:
       - checkout
@@ -23,6 +27,8 @@ jobs:
           kubeconfig: KUBECONFIG_DATA
   install-kubectl:
     machine: true
+    docker:
+      - image: 'prakashmirji/circle-simple-app:v2' 
     description: install kubectl
     steps:
       - checkout
@@ -30,6 +36,8 @@ jobs:
 
   deploy:
     machine: true
+    docker:
+      - image: 'prakashmirji/circle-simple-app:v2' 
     description: Deploy application to HPE HCP Kubernetes Engine
     steps:
       - checkout
