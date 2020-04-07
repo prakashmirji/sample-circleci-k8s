@@ -1,7 +1,5 @@
 jobs:
   build:
-    macos:
-      xcode: '9.0'
     steps:
       - checkout
       - kube-orb/install-kubeconfig:
