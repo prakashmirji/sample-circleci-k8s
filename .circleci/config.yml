@@ -15,7 +15,6 @@ jobs:
           steps:
             - run: npm install
   install-kubeconfig:
-    description: install kubeconfig
     docker:
       - image: 'prakashmirji/circleci-simple-app:v2'
     description: install kubeconfig
@@ -24,7 +23,6 @@ jobs:
       - kube-orb/install-kubeconfig:
           kubeconfig: KUBECONFIG_DATA
   install-kubectl:
-    description: install kubectl
     docker:
       - image: 'prakashmirji/circleci-simple-app:v2'
     description: install kubectl
