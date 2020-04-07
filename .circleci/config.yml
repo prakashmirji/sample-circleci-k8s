@@ -4,7 +4,7 @@ jobs:
     steps:
       - checkout
       - kube-orb/install-kubeconfig:
-          kubeconfig: $KUBECONFIG_DATA
+          kubeconfig: KUBECONFIG_DATA
 orbs:
   kube-orb: circleci/kubernetes@0.11.0
 version: 2.1
