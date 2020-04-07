@@ -15,13 +15,16 @@ jobs:
           steps:
             - run: npm install
 
-  install-kubectl-kubeconfig:
-    description: install-kubectl-kubeconfig
+  install-kubeconfig:
+    description: install kubeconfig
     machine: true
     steps:
       - checkout
       - kube-orb/install-kubeconfig:
           kubeconfig: KUBECONFIG_DATA
+  install-kubectl:
+    description: install kubectl
+    machine: true
     steps:
       - checkout
       - kube-orb/install-kubectl
@@ -43,10 +46,13 @@ workflows:
   build_update_deploy:
     jobs:
       - build
-      - install-kubectl-kubeconfig:
+      - install-kubeconfig:
           requires:
             - build
+      - install-kubectl:
+          requires:
+            - install-kubeconfig
       - deploy:
           requires:
-            - install-kubectl-kubeconfig
+            - install-kubectl
       
