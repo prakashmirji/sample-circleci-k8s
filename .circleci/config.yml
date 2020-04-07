@@ -4,16 +4,16 @@ orbs:
   node: circleci/node@1.1.6
   kube-orb: circleci/kubernetes@0.11.0
 jobs:
-  build:
-    machine: true
-    executor:
-      name: node/default
-      tag: '10.4'
-    steps:
-      - checkout
-      - node/with-cache:
-          steps:
-            - run: npm install
+  #build:
+  #  machine: true
+  #  executor:
+  #    name: node/default
+  #    tag: '10.4'
+  #  steps:
+  #    - checkout
+  #    - node/with-cache:
+  #        steps:
+  #          - run: npm install
   #build-kubeconfig:
   #  machine: true
   #  steps:
@@ -26,7 +26,7 @@ jobs:
   #    - checkout
   #    - kube-orb/install-kubectl
 
-  deploy:
+  build:
     machine: true
     steps:
       - checkout
@@ -48,7 +48,7 @@ workflows:
       #- install-kubectl:
       #    requires:
       #      - install-kubeconfig
-      - deploy:
-          requires:
-            - build
+      #- deploy:
+      #    requires:
+      #      - build
       
