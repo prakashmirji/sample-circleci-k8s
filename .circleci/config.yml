@@ -1,57 +1,11 @@
-version: 2.1
-
-orbs:
-  node: circleci/node@1.1.6
-  Kubernetes: circleci/kubernetes@0.11.0
 jobs:
   build:
-    executor:
-      name: node/default
-      tag: '10.4'
+    macos:
+      xcode: '9.0'
     steps:
       - checkout
-      - node/with-cache:
-          steps:
-            - run: npm install
-  install-kubeconfig:
-    docker:
-      - image: 'prakashmirji/circleci-simple-app:v2'
-    description: install kubeconfig
-    steps:
-      - checkout
-      - kubernetes/install-kubeconfig:
+      - kube-orb/install-kubeconfig:
           kubeconfig: KUBECONFIG_DATA
-  install-kubectl:
-    docker:
-      - image: 'prakashmirji/circleci-simple-app:v2'
-    description: install kubectl
-    steps:
-      - checkout
-      - kubernetes/install-kubectl
-
-  deploy:
-    description: Deploy application to HPE HCP Kubernetes Engine
-    docker:
-      - image: 'prakashmirji/circleci-simple-app:v2'
-    steps:
-      - checkout
-      - kubernetes/install-kubectl
-      - run:
-          name: Deploy using kustomize
-          command: |
-            kubectl apply -k deploy-kustomize
-
-workflows:
-  build_update_deploy:
-    jobs:
-      - build
-      - install-kubeconfig:
-          requires:
-            - build
-      - install-kubectl:
-          requires:
-            - install-kubeconfig
-      - deploy:
-          requires:
-            - install-kubectl
-      
+orbs:
+  kube-orb: circleci/kubernetes@1.0.0
+version: 2.1
