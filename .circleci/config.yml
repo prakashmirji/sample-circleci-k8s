@@ -2,7 +2,7 @@ version: 2.1
 
 orbs:
   node: circleci/node@1.1.6
-  Kube-orb: circleci/kubernetes@0.11.0
+  Kubernetes: circleci/kubernetes@0.11.0
 jobs:
   build:
     executor:
@@ -19,7 +19,7 @@ jobs:
     description: install kubeconfig
     steps:
       - checkout
-      - kube-orb/install-kubeconfig:
+      - kubernetes/install-kubeconfig:
           kubeconfig: KUBECONFIG_DATA
   install-kubectl:
     docker:
@@ -27,7 +27,7 @@ jobs:
     description: install kubectl
     steps:
       - checkout
-      - kube-orb/install-kubectl
+      - kubernetes/install-kubectl
 
   deploy:
     description: Deploy application to HPE HCP Kubernetes Engine
@@ -35,7 +35,7 @@ jobs:
       - image: 'prakashmirji/circleci-simple-app:v2'
     steps:
       - checkout
-      - kube-orb/install-kubectl
+      - kubernetes/install-kubectl
       - run:
           name: Deploy using kustomize
           command: |
