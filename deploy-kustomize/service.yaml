@@ -4,8 +4,10 @@ apiVersion: v1
 kind: Service
 metadata:
   name: circleci-simple-app
-  labels:
-    chart: circleci-simple-app
+  annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/path: /metrics
+        prometheus.io/port:   "3000"
 spec:
   type: LoadBalancer
   ports:

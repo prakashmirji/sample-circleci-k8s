@@ -11,12 +11,13 @@
     "gcloud",
     "node"
   ],
-  "author": "Dominic Motuka",
+  "author": "Prakash",
   "license": "MIT",
   "dependencies": {
     "body-parser": "^1.17.2",
     "express": "^4.15.3",
-    "morgan": "^1.8.2"
+    "morgan": "^1.8.2",
+    "prom-client": "^12.0.0"
   },
   "devDependencies": {
     "chai": "^4.1.2",
